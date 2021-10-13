@@ -1,9 +1,9 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateCommentDTO } from 'src/types/DTO/create_comment.dto';
 import { EntityRepository, Repository } from 'typeorm';
 import { User } from '../auth/user.entity';
 import { UserRepository } from '../auth/user.repository';
 import { Comment } from './comment.entity';
+import { CreateCommentDTO } from './DTOs/create-comment.dto';
 
 @EntityRepository(Comment)
 export class CommentRepository extends Repository<Comment> {

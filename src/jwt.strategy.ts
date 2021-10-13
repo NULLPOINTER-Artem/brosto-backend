@@ -5,7 +5,7 @@ import { Request } from 'express';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { User } from './modules/auth/user.entity';
 import { UserRepository } from './modules/auth/user.repository';
-import { ITokenPayload } from './types/models/Token_Payload.model';
+import { ITokenPayload } from './types/interfaces/token-payload.interface';
 
 @Injectable()
 export class JWTStrategy extends PassportStrategy(Strategy) {
@@ -29,7 +29,10 @@ export class JWTStrategy extends PassportStrategy(Strategy) {
     const user: User = await this.userRepository.findOne({ email });
 
     if (!user) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException({
+        message:
+          'You should authorize yourself or register now then authorize and continue',
+      });
     }
 
     return user;

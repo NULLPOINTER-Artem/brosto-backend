@@ -1,5 +1,5 @@
 import { IsEnum, IsOptional, IsString, Matches } from 'class-validator';
-import { ROLES_USERS } from '../enums/roles-users.enum';
+import { USER_ROLE } from '../../../types/enums/user-role.enum';
 
 export class CreateUserDTO {
   @IsString()
@@ -20,6 +20,6 @@ export class CreateUserDTO {
   email: string;
 
   @IsOptional()
-  @IsEnum(ROLES_USERS)
-  role: ROLES_USERS;
+  @IsEnum(USER_ROLE)
+  role: USER_ROLE;
 }

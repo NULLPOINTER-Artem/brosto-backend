@@ -1,17 +1,19 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/decorators/getUser.decorator';
-import { CreateCommentDTO } from 'src/types/DTO/create_comment.dto';
+import { Public } from 'src/decorators/public.decorator';
+import { AuthGuard } from 'src/guards/auth.guard';
 import { User } from '../auth/user.entity';
 import { Comment } from './comment.entity';
 import { CommentService } from './comment.service';
+import { CreateCommentDTO } from './DTOs/create-comment.dto';
 
 @Controller('comment')
-@UseGuards(AuthGuard())
+@UseGuards(AuthGuard)
 export class CommentController {
   constructor(private readonly commentService: CommentService) {}
 
   @Get('/getAll')
+  @Public()
   getAllComments(): Promise<Comment[]> {
     return this.commentService.getAllComments();
   }

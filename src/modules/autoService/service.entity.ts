@@ -1,7 +1,7 @@
 import {
   Column,
   Entity,
-  OneToMany,
+  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -13,7 +13,7 @@ export class Service {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @OneToMany(() => Wrapper, (wrapper) => wrapper.services)
+  @ManyToOne(() => Wrapper, (wrapper) => wrapper.services)
   wrapper: Wrapper;
 
   @OneToOne(() => TypeService, (typeService) => typeService.service)

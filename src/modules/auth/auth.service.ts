@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { AuthorizationUserDTO } from 'src/types/DTO/authorization_user.dto';
-import { CreateUserDTO } from 'src/types/DTO/create_user-auth.dto';
-import { IJWT_Payload } from 'src/types/models/JWT_Payload.model';
 import { User } from './user.entity';
 import { UserRepository } from './user.repository';
 import { JwtService } from '@nestjs/jwt';
 import { Response } from 'express';
+import { CreateUserDTO } from './DTOs/create-user.dto';
+import { AuthorizationUserDTO } from './DTOs/authorization-user.dto';
+import { IJwtPayload } from 'src/types/interfaces/jwt-payload.interface';
 
 @Injectable()
 export class AuthService {
@@ -23,7 +23,7 @@ export class AuthService {
   authorizationUser(
     authorizationUserDTO: AuthorizationUserDTO,
     response: Response,
-  ): Promise<IJWT_Payload> {
+  ): Promise<IJwtPayload> {
     const jwtService = this.jwtService;
     return this.userRepository.authorizationUser(
       authorizationUserDTO,

@@ -1,17 +1,17 @@
-import { CreateUserDTO } from 'src/types/DTO/create_user-auth.dto';
 import { EntityRepository, Repository } from 'typeorm';
 import { User } from './user.entity';
 import * as bcrypt from 'bcrypt';
-import { AuthorizationUserDTO } from 'src/types/DTO/authorization_user.dto';
-import { IJWT_Payload } from 'src/types/models/JWT_Payload.model';
 import {
   ConflictException,
   InternalServerErrorException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { ITokenPayload } from 'src/types/models/Token_Payload.model';
 import { Response } from 'express';
+import { CreateUserDTO } from './DTOs/create-user.dto';
+import { AuthorizationUserDTO } from './DTOs/authorization-user.dto';
+import { IJwtPayload } from 'src/types/interfaces/jwt-payload.interface';
+import { ITokenPayload } from 'src/types/interfaces/token-payload.interface';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
@@ -43,7 +43,7 @@ export class UserRepository extends Repository<User> {
     authorizationUserDTO: AuthorizationUserDTO,
     jwtService: JwtService,
     response: Response,
-  ): Promise<IJWT_Payload> {
+  ): Promise<IJwtPayload> {
     const { password, email } = authorizationUserDTO;
     const user = await this.findOne({ email });
 
@@ -51,7 +51,7 @@ export class UserRepository extends Repository<User> {
       const payload: ITokenPayload = { email };
       const accessToken: string = jwtService.sign(payload);
 
-      const jwt_payload: IJWT_Payload = {
+      const jwt_payload: IJwtPayload = {
         user,
       };
 

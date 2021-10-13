@@ -1,6 +1,6 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ROLES_USERS } from 'src/types/enums/roles-users.enum';
+import { USER_ROLE } from 'src/types/enums/user-role.enum';
 import { User } from '../auth/user.entity';
 import { UserRepository } from '../auth/user.repository';
 
@@ -11,15 +11,9 @@ export class AdminService {
     private readonly userRepository: UserRepository,
   ) {}
 
-  async getAllUsers(user: User): Promise<User[]> {
-    const { role } = user;
+  async getAllUsers(): Promise<User[]> {
+    const users = await this.userRepository.find({ role: USER_ROLE.USER });
 
-    if (role === ROLES_USERS.ADMIN) {
-      const users = await this.userRepository.find({ role: ROLES_USERS.USER });
-
-      return users;
-    } else {
-      throw new UnauthorizedException('You should be ADMIN!');
-    }
+    return users;
   }
 }

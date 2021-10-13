@@ -1,5 +1,5 @@
-import { ROLES_USERS } from 'src/types/enums/roles-users.enum';
-import { STATUS_USERS } from 'src/types/enums/status-users.enum';
+import { USER_ROLE } from 'src/types/enums/user-role.enum';
+import { USER_STATUS } from 'src/types/enums/user-status.enum';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Comment } from '../comment/comment.entity';
 
@@ -16,10 +16,10 @@ export class User {
 
   @Column({
     type: 'enum',
-    enum: ROLES_USERS,
-    default: ROLES_USERS.USER,
+    enum: USER_ROLE,
+    default: USER_ROLE.USER,
   })
-  role: ROLES_USERS;
+  role: USER_ROLE;
 
   @Column({ unique: true })
   email: string;
@@ -29,10 +29,10 @@ export class User {
 
   @Column({
     type: 'enum',
-    enum: STATUS_USERS,
-    default: STATUS_USERS.ACTIVE,
+    enum: USER_STATUS,
+    default: USER_STATUS.ACTIVE,
   })
-  status: STATUS_USERS;
+  status: USER_STATUS;
 
   @Column({
     default: 0,
